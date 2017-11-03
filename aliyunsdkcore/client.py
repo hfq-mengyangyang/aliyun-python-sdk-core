@@ -150,6 +150,8 @@ class AcsClient:
             endpoint = self._location_service.find_product_domain(self.get_region_id(), request.get_location_service_code())
         if endpoint is None:
             endpoint = region_provider.find_product_domain(self.get_region_id(), request.get_product())
+            if self.get_region_id() == 'cn-hangzhou' and request.get_product() == 'Dysmsapi':
+                endpoint = 'dysmsapi.aliyuncs.com'
             if endpoint is None:
                 raise ClientException(error_code.SDK_INVALID_REGION_ID, error_msg.get_msg('SDK_INVALID_REGION_ID'))
             if not isinstance(request, AcsRequest):
